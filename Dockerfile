@@ -77,8 +77,7 @@ RUN export LD_LIBRARY_PATH=/usr/lib/oracle/12.2/client64/lib:$LD_LIBRARY_PATH
 
 RUN pear download pecl/oci8-3.2.1 && tar xvzf oci8-3.2.1.tgz && cd oci8-3.2.1 && phpize && ./configure --with-oci8=instantclient,/usr/lib/oracle/12.2/client64/lib/ && make
 RUN printf "instantclient,/usr/lib/oracle/12.2/client64/lib" | pecl install oci8-3.2.1
-RUN sh -c "echo /usr/lib/oracle/12.2/client64/lib > /etc/ld.so.conf.d/oracle-instantclient.conf"
-RUN ldconfig
+RUN docker-php-ext-enable oci8
 ##### then Please provide the path to the ORACLE_HOME directory. Use 'instantclient,/path/to/instant/client/lib' if you're compiling with Oracle Instant Client [autodetect] : shared,instantclient,/usr/lib/oracle/12.2/client64/lib
 ##### then restart apache
 
