@@ -96,6 +96,9 @@ objects:
         kind: Service
         name: ${NAME}
         weight: 100
+      tls:
+        termination: edge
+        insecureEdgeTerminationPolicy: Redirect
       wildcardPolicy: None
     metadata:
       name: ${NAME}

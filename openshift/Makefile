@@ -99,7 +99,7 @@ deploy-web:
 	@echo "+\n++ FINISHED Deploying Web\n+"
 
 build-patroni:
-	@oc -n $(BUILD_NAMESPACE) process -f patroni-build.yaml -p NAME=tbtb-ici-patroni -p TAG="12-latest" -p BASE_IMAGE_NAME=postgres -p BASE_IMAGE_TAG="12" -p SOURCE_REPOSITORY_REF="master" -p SOURCE_CONTEXT_DIR="apps/pgsql/patroni/docker" | oc -n $(BUILD_NAMESPACE) apply -f -
+	@oc -n $(BUILD_NAMESPACE) process -f patroni-build.yaml -p PATRONI_NAME=tbtb-ici-patroni -p TAG="12-latest" -p BASE_IMAGE_NAME=postgres -p BASE_IMAGE_TAG="12" -p SOURCE_REPOSITORY_REF="master" -p SOURCE_CONTEXT_DIR="apps/pgsql/patroni/docker" | oc -n $(BUILD_NAMESPACE) apply -f -
 	@oc -n $(BUILD_NAMESPACE) start-build bc/tbtb-ici-patroni --wait
 
 deploy-patroni:

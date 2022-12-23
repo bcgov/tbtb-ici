@@ -162,29 +162,29 @@ objects:
   - apiVersion: porter.devops.gov.bc.ca/v1alpha1
     kind: TransportServerClaim
     metadata:
-      name: ${NAME}-porter
+      name: ${PATRONI_NAME}-porter
       finalizers:
         - porter.devops.gov.bc.ca/finalizer
       labels:
-        app: ${NAME}-porter
+        app: ${PATRONI_NAME}-porter
     spec:
       monitor:
         interval: 10
         timeout: 10
         type: tcp
-      service: ${NAME}-master
+      service: ${PATRONI_NAME}-master
       servicePort: 5432
 
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      name: ${NAME}-porter-network-policy
-        labels:
-          app: ${NAME}-porter-network-policy
+      name: ${PATRONI_NAME}-porter-network-policy
+      labels:
+        app: ${PATRONI_NAME}-porter-network-policy
     spec:
       podSelector:
         matchLabels:
-          statefulset.kubernetes.io/pod-name: ${NAME}-0
+          statefulset.kubernetes.io/pod-name: ${PATRONI_NAME}-0
       ingress:
         - from:
             - namespaceSelector:
