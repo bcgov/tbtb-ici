@@ -77,6 +77,8 @@ RUN export LD_LIBRARY_PATH=/usr/lib/oracle/12.2/client64/lib:$LD_LIBRARY_PATH
 
 RUN pear download pecl/oci8-3.2.1 && tar xvzf oci8-3.2.1.tgz && cd oci8-3.2.1 && phpize && ./configure --with-oci8=instantclient,/usr/lib/oracle/12.2/client64/lib/ && make
 RUN printf "instantclient,/usr/lib/oracle/12.2/client64/lib" | pecl install oci8-3.2.1
+RUN sh -c "echo /usr/lib/oracle/12.2/client64/lib > /etc/ld.so.conf.d/oracle-instantclient.conf"
+RUN ldconfig
 ##### then Please provide the path to the ORACLE_HOME directory. Use 'instantclient,/path/to/instant/client/lib' if you're compiling with Oracle Instant Client [autodetect] : shared,instantclient,/usr/lib/oracle/12.2/client64/lib
 ##### then restart apache
 
@@ -84,7 +86,7 @@ RUN printf "instantclient,/usr/lib/oracle/12.2/client64/lib" | pecl install oci8
 
 
 # Install Postgre PDO
-RUN apt-get install -y libonig-dev \
+RUN apt-get install -y libpq-dev libonig-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql && docker-php-ext-install curl && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && docker-php-ext-install -j$(nproc) gd && a2enmod rewrite
 
