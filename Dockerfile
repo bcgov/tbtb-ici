@@ -1,6 +1,4 @@
 # MAIN
-#FROM php:8.2-apache
-
 FROM php:8.2-apache
 ARG DEBIAN_VERSION=20.04
 ARG APACHE_OPENIDC_VERSION=2.4.10
@@ -82,8 +80,6 @@ RUN docker-php-ext-enable oci8
 ##### then restart apache
 
 
-
-
 # Install Postgre PDO
 RUN apt-get install -y libpq-dev libonig-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
@@ -128,15 +124,11 @@ RUN sed -i -e 's/^ServerTokens OS$/ServerTokens Prod/g' \
 RUN a2enmod rewrite headers
 
 # Install NPM
-RUN curl --location https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
-#RUN chown -R ${USER_ID}:root /root/.npm && chmod -R 766 /root/.npm
+RUN curl --location https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs
 
 # Install Yarn
 RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-
-#RUN npm config list
-#RUN npm config ls -l
 
 RUN apt-get autoclean && apt-get autoremove
 
