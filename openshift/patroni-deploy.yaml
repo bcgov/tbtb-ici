@@ -67,7 +67,7 @@ objects:
                       apiVersion: v1
                       fieldPath: metadata.namespace
                 - name: PATRONI_KUBERNETES_LABELS
-                  value: '{"cluster-name": "${NAME}"}'
+                  value: '{"cluster-name": "${PATRONI_NAME}"}'
                 - name: PATRONI_SUPERUSER_USERNAME
                   valueFrom:
                     secretKeyRef:
@@ -205,7 +205,7 @@ parameters:
     description: |
       The number of StatefulSet replicas to use.
     displayName: REPLICAS
-    value: '3'
+    value: '1'
   - name: CPU_REQUEST
     description: |
       Starting amount of CPU the container can use.
